@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="A modern BMI & Body Fat Calculator that generates personalized health reports with recommendations." />
+  <title>BMI & Body Fat Calculator | Health Report</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  <!-- ===== BACKGROUND PARTICLES ===== -->
+  <div class="bg-particles" aria-hidden="true">
+    <span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <i class="fa-solid fa-heart-pulse logo-icon"></i>
+        <span>HealthMetrics <strong>Pro</strong></span>
+      </div>
+      <p class="header-subtitle">BMI &amp; Body Composition Analyzer</p>
+    </div>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-wrapper">
+
+    <!-- ====== CALCULATOR CARD ====== -->
+    <section class="card calculator-card" id="calculator-section" aria-label="BMI Calculator Form">
+      <div class="card-header">
+        <h1><i class="fa-solid fa-calculator"></i> BMI Calculator</h1>
+        <p>Enter your details below to calculate your Body Mass Index and receive a personalized health report.</p>
+      </div>
+
+      <form id="bmiForm" novalidate>
+
+        <!-- Full Name -->
+        <div class="form-group">
+          <label for="fullName"><i class="fa-solid fa-user"></i> Full Name</label>
+          <input type="text" id="fullName" name="fullName" placeholder="Enter your name" autocomplete="name"
+            maxlength="60" />
+          <span class="error-msg" id="fullNameError"></span>
+        </div>
+
+        <!-- Age -->
+        <div class="form-group">
+          <label for="age"><i class="fa-solid fa-cake-candles"></i> Age (years)</label>
+          <input type="number" id="age" name="age" placeholder="Enter your age " min="1" max="120" />
+          <span class="error-msg" id="ageError"></span>
+        </div>
+
+        <!-- Gender -->
+        <div class="form-group">
+          <label><i class="fa-solid fa-venus-mars"></i> Gender</label>
+          <div class="gender-toggle" role="group" aria-label="Gender selection">
+            <button type="button" class="gender-btn active" id="genderMale" data-gender="Male" aria-pressed="true">
+              <i class="fa-solid fa-mars"></i> Male
+            </button>
+            <button type="button" class="gender-btn" id="genderFemale" data-gender="Female" aria-pressed="false">
+              <i class="fa-solid fa-venus"></i> Female
+            </button>
+          </div>
+          <input type="hidden" id="gender" value="Male" />
+          <span class="error-msg" id="genderError"></span>
+        </div>
+
+        <!-- Height -->
+        <div class="form-group">
+          <label for="height"><i class="fa-solid fa-ruler-vertical"></i> Height (cm)</label>
+          <input type="number" id="height" name="height" placeholder="e.g. 170" min="50" max="300" step="0.1" />
+          <span class="error-msg" id="heightError"></span>
+        </div>
+
+        <!-- Weight -->
+        <div class="form-group">
+          <label for="weight"><i class="fa-solid fa-weight-scale"></i> Weight (kg)</label>
+          <input type="number" id="weight" name="weight" placeholder="e.g. 70" min="1" max="500" step="0.1" />
+          <span class="error-msg" id="weightError"></span>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary" id="calculateBtn">
+            <i class="fa-solid fa-chart-line"></i> Calculate BMI
+          </button>
+          <button type="button" class="btn btn-secondary" id="resetBtn">
+            <i class="fa-solid fa-rotate-left"></i> Reset Form
+          </button>
+        </div>
+
+      </form>
+    </section>
+
+    <!-- ====== RESULTS SECTION ====== -->
+    <section class="card results-card hidden" id="resultsSection" aria-label="BMI Results and Health Report"
+      aria-live="polite">
+
+      <!-- BMI Gauge -->
+      <div class="gauge-wrapper">
+        <div class="gauge-title">Your BMI Score</div>
+        <div class="gauge-container" id="gaugeContainer" aria-hidden="true">
+          <svg viewBox="0 0 200 110" class="gauge-svg">
+            <!-- Track arcs by category -->
+            <path d="M 20 100 A 80 80 0 0 1 57.57 30.75" stroke="#3b82f6" stroke-width="14" fill="none"
+              stroke-linecap="round" />
+            <path d="M 57.57 30.75 A 80 80 0 0 1 116.57 15.36" stroke="#22c55e" stroke-width="14" fill="none"
+              stroke-linecap="round" />
+            <path d="M 116.57 15.36 A 80 80 0 0 1 163.64 42.68" stroke="#f97316" stroke-width="14" fill="none"
+              stroke-linecap="round" />
+            <path d="M 163.64 42.68 A 80 80 0 0 1 180 100" stroke="#ef4444" stroke-width="14" fill="none"
+              stroke-linecap="round" />
+            <!-- Needle -->
+            <line id="gaugeNeedle" x1="100" y1="100" x2="100" y2="30" stroke="#ffffff" stroke-width="3"
+              stroke-linecap="round" transform="rotate(0, 100, 100)" />
+            <circle cx="100" cy="100" r="6" fill="#ffffff" />
+          </svg>
+          <div class="gauge-labels">
+            <span style="color:#3b82f6">Under</span>
+            <span style="color:#22c55e">Normal</span>
+            <span style="color:#f97316">Over</span>
+            <span style="color:#ef4444">Obese</span>
+          </div>
+        </div>
+        <div class="bmi-score-display">
+          <span class="bmi-value" id="bmiValueDisplay">--</span>
+          <span class="bmi-unit">kg/m²</span>
+        </div>
+        <div class="bmi-category-badge" id="bmiCategoryBadge">--</div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card" id="statBMI">
+          <div class="stat-icon"><i class="fa-solid fa-weight-scale"></i></div>
+          <div class="stat-value" id="statBMIValue">--</div>
+          <div class="stat-label">BMI Value</div>
+        </div>
+        <div class="stat-card" id="statBodyFat">
+          <div class="stat-icon"><i class="fa-solid fa-droplet"></i></div>
+          <div class="stat-value" id="statBodyFatValue">--</div>
+          <div class="stat-label">Body Fat %</div>
+        </div>
+        <div class="stat-card" id="statIdealWeight">
+          <div class="stat-icon"><i class="fa-solid fa-bullseye"></i></div>
+          <div class="stat-value" id="statIdealWeightValue">--</div>
+          <div class="stat-label">Ideal Weight</div>
+        </div>
+        <div class="stat-card" id="statBMR">
+          <div class="stat-icon"><i class="fa-solid fa-fire"></i></div>
+          <div class="stat-value" id="statBMRValue">--</div>
+          <div class="stat-label">BMR (kcal/day)</div>
+        </div>
+      </div>
+
+      <!-- BMI Scale Bar -->
+      <div class="bmi-scale-section">
+        <h3 class="section-title"><i class="fa-solid fa-sliders"></i> BMI Scale</h3>
+        <div class="bmi-scale-bar" role="img" aria-label="BMI category scale">
+          <div class="scale-segment seg-underweight">
+            <span>Underweight</span>
+            <span>&lt; 18.5</span>
+          </div>
+          <div class="scale-segment seg-normal">
+            <span>Normal</span>
+            <span>18.5 – 24.9</span>
+          </div>
+          <div class="scale-segment seg-overweight">
+            <span>Overweight</span>
+            <span>25 – 29.9</span>
+          </div>
+          <div class="scale-segment seg-obese">
+            <span>Obese</span>
+            <span>≥ 30</span>
+          </div>
+        </div>
+        <div class="bmi-marker-row">
+          <div class="bmi-marker" id="bmiMarker" aria-hidden="true">
+            <i class="fa-solid fa-caret-up"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== HEALTH REPORT ====== -->
+      <div class="report-section" id="healthReport">
+        <h2 class="report-heading"><i class="fa-solid fa-file-medical"></i> Personalized Health Report</h2>
+
+        <div class="report-grid">
+          <!-- Personal Details -->
+          <div class="report-block">
+            <h3><i class="fa-solid fa-id-card"></i> Personal Details</h3>
+            <table class="report-table">
+              <tbody>
+                <tr>
+                  <td>Name</td>
+                  <td id="rName">--</td>
+                </tr>
+                <tr>
+                  <td>Age</td>
+                  <td id="rAge">--</td>
+                </tr>
+                <tr>
+                  <td>Gender</td>
+                  <td id="rGender">--</td>
+                </tr>
+                <tr>
+                  <td>Height</td>
+                  <td id="rHeight">--</td>
+                </tr>
+                <tr>
+                  <td>Weight</td>
+                  <td id="rWeight">--</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Body Composition -->
+          <div class="report-block">
+            <h3><i class="fa-solid fa-person"></i> Body Composition</h3>
+            <table class="report-table">
+              <tbody>
+                <tr>
+                  <td>BMI Value</td>
+                  <td id="rBMI">--</td>
+                </tr>
+                <tr>
+                  <td>BMI Category</td>
+                  <td id="rCategory">--</td>
+                </tr>
+                <tr>
+                  <td>Body Fat %</td>
+                  <td id="rBodyFat">--</td>
+                </tr>
+                <tr>
+                  <td>Fat Mass</td>
+                  <td id="rFatMass">--</td>
+                </tr>
+                <tr>
+                  <td>Lean Mass</td>
+                  <td id="rLeanMass">--</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Metabolic Data -->
+          <div class="report-block">
+            <h3><i class="fa-solid fa-fire-flame-curved"></i> Metabolic Data</h3>
+            <table class="report-table">
+              <tbody>
+                <tr>
+                  <td>BMR</td>
+                  <td id="rBMR">--</td>
+                </tr>
+                <tr>
+                  <td>TDEE (Sedentary)</td>
+                  <td id="rTDEE">--</td>
+                </tr>
+                <tr>
+                  <td>Ideal Weight Range</td>
+                  <td id="rIdealRange">--</td>
+                </tr>
+                <tr>
+                  <td>Weight to Lose/Gain</td>
+                  <td id="rWeightDiff">--</td>
+                </tr>
+                <tr>
+                  <td>Health Status</td>
+                  <td id="rHealthStatus">--</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Recommendation Box -->
+        <div class="recommendation-box" id="recommendationBox">
+          <div class="rec-icon"><i class="fa-solid fa-lightbulb"></i></div>
+          <div class="rec-content">
+            <h4>Personalized Recommendation</h4>
+            <p id="recommendationText">--</p>
+          </div>
+        </div>
+
+        <!-- Body Fat Categories Reference -->
+        <div class="bodyfat-reference">
+          <h3 class="section-title"><i class="fa-solid fa-chart-bar"></i> Body Fat % Reference Chart</h3>
+          <div class="bf-table-wrapper">
+            <table class="bf-ref-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Women</th>
+                  <th>Men</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Essential Fat</td>
+                  <td>10–13%</td>
+                  <td>2–5%</td>
+                </tr>
+                <tr>
+                  <td>Athletes</td>
+                  <td>14–20%</td>
+                  <td>6–13%</td>
+                </tr>
+                <tr>
+                  <td>Fitness</td>
+                  <td>21–24%</td>
+                  <td>14–17%</td>
+                </tr>
+                <tr>
+                  <td>Average / Acceptable</td>
+                  <td>25–31%</td>
+                  <td>18–24%</td>
+                </tr>
+                <tr>
+                  <td>Obese</td>
+                  <td>32%+</td>
+                  <td>25%+</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Report Action Buttons -->
+        <div class="btn-group report-actions">
+          <button type="button" class="btn btn-primary" id="printBtn">
+            <i class="fa-solid fa-print"></i> Print Report
+          </button>
+          <button type="button" class="btn btn-secondary" id="recalcBtn">
+            <i class="fa-solid fa-arrow-left"></i> Recalculate
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <p>
+      <i class="fa-solid fa-circle-info"></i>
+      This tool is for educational purposes only. Always consult a qualified healthcare professional for medical advice.
+    </p>
+    <p class="footer-copy">&copy; 2026 HealthMetrics Pro. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

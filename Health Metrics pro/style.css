@@ -1,0 +1,1010 @@
+/* ================================================================
+   HealthMetrics Pro — style.css
+   Dark Theme | Green Accents | Modern UI
+================================================================ */
+
+/* ── 1. RESET & ROOT VARIABLES ────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Color Palette */
+  --clr-bg: #0d0f14;
+  --clr-surface: #151922;
+  --clr-surface-2: #1c2130;
+  --clr-surface-3: #232b3e;
+  --clr-border: #2a3347;
+
+
+  --clr-accent: #22c55e;
+  --clr-accent-dim: #16a34a;
+  --clr-accent-glow: rgba(34, 197, 94, .15);
+
+  --clr-text: #e2e8f0;
+  --clr-text-muted: #7d8fa9;
+  --clr-text-dim: #4a5568;
+
+  /* Category Colors */
+  --clr-under: #3b82f6;
+  --clr-normal: #22c55e;
+  --clr-over: #f97316;
+  --clr-obese: #ef4444;
+
+  /* Sizes */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  /* Transitions */
+  --trans-fast: 0.18s ease;
+  --trans-med: 0.3s ease;
+  --trans-slow: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── 2. GLOBAL BASE ────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── 3. ANIMATED BACKGROUND PARTICLES ──────────────────────────── */
+.bg-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.bg-particles span {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34, 197, 94, .18) 0%, transparent 70%);
+  animation: floatParticle linear infinite;
+}
+
+.bg-particles span:nth-child(1) {
+  width: 320px;
+  height: 320px;
+  top: 10%;
+  left: -5%;
+  animation-duration: 22s;
+  animation-delay: 0s;
+}
+
+.bg-particles span:nth-child(2) {
+  width: 200px;
+  height: 200px;
+  top: 60%;
+  left: 85%;
+  animation-duration: 18s;
+  animation-delay: -6s;
+}
+
+.bg-particles span:nth-child(3) {
+  width: 260px;
+  height: 260px;
+  top: 80%;
+  left: 30%;
+  animation-duration: 25s;
+  animation-delay: -3s;
+}
+
+.bg-particles span:nth-child(4) {
+  width: 150px;
+  height: 150px;
+  top: 30%;
+  left: 70%;
+  animation-duration: 20s;
+  animation-delay: -9s;
+}
+
+.bg-particles span:nth-child(5) {
+  width: 400px;
+  height: 400px;
+  top: -8%;
+  left: 50%;
+  animation-duration: 30s;
+  animation-delay: -14s;
+}
+
+.bg-particles span:nth-child(6) {
+  width: 180px;
+  height: 180px;
+  top: 45%;
+  left: 10%;
+  animation-duration: 16s;
+  animation-delay: -2s;
+}
+
+@keyframes floatParticle {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: .6;
+  }
+
+  50% {
+    transform: translateY(-40px) scale(1.1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: .6;
+  }
+}
+
+/* ── 4. SITE HEADER ─────────────────────────────────────────────── */
+.site-header {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 2.5rem 1rem 1.5rem;
+}
+
+.header-inner {
+  display: inline-block;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--clr-text);
+}
+
+.logo strong {
+  color: var(--clr-accent);
+}
+
+.logo-icon {
+  color: var(--clr-accent);
+  font-size: 1.9rem;
+  filter: drop-shadow(0 0 10px var(--clr-accent));
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 8px var(--clr-accent));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 20px var(--clr-accent));
+  }
+}
+
+.header-subtitle {
+  font-size: .875rem;
+  color: var(--clr-text-muted);
+  margin-top: .25rem;
+  letter-spacing: .5px;
+}
+
+/* ── 5. LAYOUT ──────────────────────────────────────────────────── */
+.main-wrapper {
+  position: relative;
+  z-index: 10;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ── 6. CARDS ───────────────────────────────────────────────────── */
+.card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-xl);
+  padding: 2rem 2.25rem;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, .35),
+    0 1px 0 rgba(255, 255, 255, .04) inset;
+  transition: box-shadow var(--trans-med);
+}
+
+.card:hover {
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, .45),
+    0 0 0 1px var(--clr-border-glow),
+    0 1px 0 rgba(255, 255, 255, .04) inset;
+}
+
+/* Card Header */
+.card-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.card-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  color: var(--clr-text);
+}
+
+.card-header h1 i {
+  color: var(--clr-accent);
+}
+
+.card-header p {
+  color: var(--clr-text-muted);
+  font-size: .875rem;
+  margin-top: .4rem;
+}
+
+/* ── 7. FORM ELEMENTS ───────────────────────────────────────────── */
+.form-group {
+  margin-bottom: 1.35rem;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--clr-text-muted);
+  margin-bottom: .45rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.form-group label i {
+  color: var(--clr-accent);
+  font-size: .9rem;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  background: var(--clr-surface-2);
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding: .8rem 1rem;
+  font-size: .95rem;
+  font-family: inherit;
+  color: var(--clr-text);
+  outline: none;
+  transition: border-color var(--trans-fast), box-shadow var(--trans-fast), background var(--trans-fast);
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+input:focus {
+  border-color: var(--clr-accent);
+  background: var(--clr-surface-3);
+  box-shadow: 0 0 0 3px var(--clr-accent-glow);
+}
+
+input.error-input {
+  border-color: var(--clr-obese);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, .15);
+}
+
+input::placeholder {
+  color: var(--clr-text-dim);
+}
+
+.error-msg {
+  display: block;
+  font-size: .775rem;
+  color: var(--clr-obese);
+  margin-top: .3rem;
+  min-height: 1rem;
+  font-weight: 500;
+}
+
+/* Gender Toggle */
+.gender-toggle {
+  display: flex;
+  gap: .75rem;
+}
+
+.gender-btn {
+  flex: 1;
+  background: var(--clr-surface-2);
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding: .75rem 1rem;
+  font-size: .95rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--clr-text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  transition: all var(--trans-fast);
+}
+
+.gender-btn:hover {
+  border-color: var(--clr-accent);
+  color: var(--clr-text);
+}
+
+.gender-btn.active {
+  background: var(--clr-accent-glow);
+  border-color: var(--clr-accent);
+  color: var(--clr-accent);
+  box-shadow: 0 0 12px var(--clr-accent-glow);
+}
+
+/* ── 8. BUTTONS ─────────────────────────────────────────────────── */
+.btn-group {
+  display: flex;
+  gap: .9rem;
+  margin-top: 1.75rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  flex: 1;
+  min-width: 140px;
+  padding: .85rem 1.5rem;
+  font-size: .95rem;
+  font-family: inherit;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  letter-spacing: .3px;
+  transition: all var(--trans-med);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, .08);
+  opacity: 0;
+  transition: opacity var(--trans-fast);
+}
+
+.btn:hover::before {
+  opacity: 1;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--clr-accent) 0%, var(--clr-accent-dim) 100%);
+  color: #000;
+  box-shadow: 0 4px 20px rgba(34, 197, 94, .4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(34, 197, 94, .55);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: var(--clr-surface-3);
+  color: var(--clr-text);
+  border: 1.5px solid var(--clr-border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--clr-accent);
+  color: var(--clr-accent);
+  transform: translateY(-2px);
+}
+
+/* ── 9. RESULTS CARD ────────────────────────────────────────────── */
+.results-card {
+  animation: slideUp .5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ── 10. GAUGE ──────────────────────────────────────────────────── */
+.gauge-wrapper {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.gauge-title {
+  font-size: .8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--clr-text-muted);
+  margin-bottom: .75rem;
+}
+
+.gauge-container {
+  width: 220px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.gauge-svg {
+  width: 100%;
+  overflow: visible;
+}
+
+.gauge-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: .62rem;
+  font-weight: 700;
+  margin-top: 4px;
+  letter-spacing: .3px;
+}
+
+.bmi-score-display {
+  margin-top: .5rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: .4rem;
+}
+
+.bmi-value {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--clr-accent);
+  line-height: 1;
+  letter-spacing: -2px;
+  transition: color var(--trans-med);
+}
+
+.bmi-unit {
+  font-size: .85rem;
+  color: var(--clr-text-muted);
+}
+
+.bmi-category-badge {
+  display: inline-block;
+  margin-top: .5rem;
+  padding: .3rem 1.2rem;
+  border-radius: 100px;
+  font-size: .85rem;
+  font-weight: 700;
+  letter-spacing: .5px;
+  background: var(--clr-accent-glow);
+  color: var(--clr-accent);
+  border: 1px solid var(--clr-accent);
+  transition: all var(--trans-med);
+}
+
+/* ── 11. STATS GRID ─────────────────────────────────────────────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .9rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 600px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.stat-card {
+  background: var(--clr-surface-2);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding: 1.1rem .75rem;
+  text-align: center;
+  transition: all var(--trans-med);
+}
+
+.stat-card:hover {
+  border-color: var(--clr-accent);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(34, 197, 94, .15);
+}
+
+.stat-icon {
+  color: var(--clr-accent);
+  font-size: 1.3rem;
+  margin-bottom: .4rem;
+}
+
+.stat-value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--clr-text);
+}
+
+.stat-label {
+  font-size: .7rem;
+  color: var(--clr-text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-top: .2rem;
+}
+
+/* ── 12. BMI SCALE BAR ─────────────────────────────────────────── */
+.bmi-scale-section {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: .85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: var(--clr-text-muted);
+  margin-bottom: .9rem;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+.section-title i {
+  color: var(--clr-accent);
+}
+
+.bmi-scale-bar {
+  display: flex;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--clr-border);
+}
+
+.scale-segment {
+  flex: 1;
+  padding: .7rem .5rem;
+  text-align: center;
+  font-size: .68rem;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  letter-spacing: .3px;
+  transition: opacity var(--trans-fast);
+}
+
+.scale-segment span:first-child {
+  font-size: .7rem;
+  text-transform: uppercase;
+}
+
+.scale-segment span:last-child {
+  font-size: .65rem;
+  opacity: .75;
+}
+
+.seg-underweight {
+  background: rgba(59, 130, 246, .2);
+  color: var(--clr-under);
+}
+
+.seg-normal {
+  background: rgba(34, 197, 94, .2);
+  color: var(--clr-normal);
+}
+
+.seg-overweight {
+  background: rgba(249, 115, 22, .2);
+  color: var(--clr-over);
+}
+
+.seg-obese {
+  background: rgba(239, 68, 68, .2);
+  color: var(--clr-obese);
+}
+
+.bmi-marker-row {
+  position: relative;
+  height: 22px;
+}
+
+.bmi-marker {
+  position: absolute;
+  color: var(--clr-accent);
+  font-size: 1.1rem;
+  transform: translateX(-50%);
+  transition: left .6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  left: 0%;
+  top: 0;
+  filter: drop-shadow(0 0 6px var(--clr-accent));
+}
+
+/* ── 13. HEALTH REPORT ─────────────────────────────────────────── */
+.report-section {
+  border-top: 1px solid var(--clr-border);
+  padding-top: 2rem;
+  margin-top: .5rem;
+}
+
+.report-heading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.report-heading i {
+  color: var(--clr-accent);
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 700px) {
+  .report-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.report-block {
+  background: var(--clr-surface-2);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding: 1.1rem;
+}
+
+.report-block h3 {
+  font-size: .78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: var(--clr-accent);
+  margin-bottom: .75rem;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.report-table td {
+  padding: .38rem .25rem;
+  font-size: .82rem;
+  border-bottom: 1px solid var(--clr-border);
+  vertical-align: top;
+}
+
+.report-table td:first-child {
+  color: var(--clr-text-muted);
+  font-weight: 500;
+  width: 45%;
+}
+
+.report-table td:last-child {
+  font-weight: 600;
+  color: var(--clr-text);
+}
+
+.report-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Recommendation Box */
+.recommendation-box {
+  display: flex;
+  gap: 1rem;
+  background: var(--clr-surface-2);
+  border: 1px solid var(--clr-accent);
+  border-left: 4px solid var(--clr-accent);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.25rem;
+  margin-bottom: 1.75rem;
+  transition: border-color var(--trans-med);
+}
+
+.rec-icon {
+  font-size: 1.5rem;
+  color: var(--clr-accent);
+  flex-shrink: 0;
+  margin-top: .1rem;
+  transition: color var(--trans-med);
+}
+
+.rec-content h4 {
+  font-size: .85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--clr-accent);
+  margin-bottom: .35rem;
+  transition: color var(--trans-med);
+}
+
+.rec-content p {
+  font-size: .9rem;
+  color: var(--clr-text);
+  line-height: 1.65;
+}
+
+/* Body Fat Reference Table */
+.bodyfat-reference {
+  margin-bottom: 1.75rem;
+}
+
+.bf-table-wrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--clr-border);
+}
+
+.bf-ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .83rem;
+}
+
+.bf-ref-table th,
+.bf-ref-table td {
+  padding: .65rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.bf-ref-table th {
+  background: var(--clr-surface-2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-size: .72rem;
+  color: var(--clr-accent);
+}
+
+.bf-ref-table td:first-child {
+  text-align: left;
+  color: var(--clr-text-muted);
+  font-weight: 500;
+}
+
+.bf-ref-table tr:last-child td {
+  border-bottom: none;
+}
+
+.bf-ref-table tr:hover td {
+  background: var(--clr-surface-2);
+}
+
+/* Report Buttons */
+.report-actions {
+  margin-top: .5rem;
+}
+
+/* ── 14. CATEGORY COLOR THEMING ────────────────────────────────── */
+/* Applied dynamically via JS data attributes */
+[data-cat="underweight"] .bmi-value,
+[data-cat="underweight"] .stat-icon {
+  color: var(--clr-under);
+}
+
+[data-cat="underweight"] .bmi-category-badge {
+  background: rgba(59, 130, 246, .15);
+  color: var(--clr-under);
+  border-color: var(--clr-under);
+}
+
+[data-cat="underweight"] .recommendation-box {
+  border-color: var(--clr-under);
+}
+
+[data-cat="underweight"] .rec-icon,
+[data-cat="underweight"] .rec-content h4 {
+  color: var(--clr-under);
+}
+
+[data-cat="normal"] .bmi-value {
+  color: var(--clr-normal);
+}
+
+[data-cat="normal"] .bmi-category-badge {
+  background: rgba(34, 197, 94, .15);
+  color: var(--clr-normal);
+  border-color: var(--clr-normal);
+}
+
+[data-cat="normal"] .recommendation-box {
+  border-color: var(--clr-normal);
+}
+
+[data-cat="normal"] .rec-icon,
+[data-cat="normal"] .rec-content h4 {
+  color: var(--clr-normal);
+}
+
+[data-cat="overweight"] .bmi-value {
+  color: var(--clr-over);
+}
+
+[data-cat="overweight"] .bmi-category-badge {
+  background: rgba(249, 115, 22, .15);
+  color: var(--clr-over);
+  border-color: var(--clr-over);
+}
+
+[data-cat="overweight"] .recommendation-box {
+  border-color: var(--clr-over);
+}
+
+[data-cat="overweight"] .rec-icon,
+[data-cat="overweight"] .rec-content h4 {
+  color: var(--clr-over);
+}
+
+[data-cat="obese"] .bmi-value {
+  color: var(--clr-obese);
+}
+
+[data-cat="obese"] .bmi-category-badge {
+  background: rgba(239, 68, 68, .15);
+  color: var(--clr-obese);
+  border-color: var(--clr-obese);
+}
+
+[data-cat="obese"] .recommendation-box {
+  border-color: var(--clr-obese);
+}
+
+[data-cat="obese"] .rec-icon,
+[data-cat="obese"] .rec-content h4 {
+  color: var(--clr-obese);
+}
+
+/* ── 15. FOOTER ─────────────────────────────────────────────────── */
+.site-footer {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 1.5rem 1rem 2rem;
+  font-size: .78rem;
+  color: var(--clr-text-dim);
+  border-top: 1px solid var(--clr-border);
+}
+
+.site-footer p {
+  margin: .25rem 0;
+}
+
+.site-footer i {
+  color: var(--clr-accent);
+}
+
+.footer-copy {
+  color: var(--clr-text-dim);
+  opacity: .6;
+}
+
+/* ── 16. PRINT STYLES ───────────────────────────────────────────── */
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 12pt;
+  }
+
+  .bg-particles,
+  .site-header,
+  .calculator-card,
+  .gauge-wrapper,
+  .stats-grid,
+  .bmi-scale-section,
+  .btn-group,
+  .site-footer {
+    display: none !important;
+  }
+
+  .results-card {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+  }
+
+  .report-block {
+    border: 1px solid #ccc;
+    background: #fafafa;
+  }
+
+  .report-table td {
+    color: #000 !important;
+    border-color: #ccc;
+  }
+
+  .report-table td:first-child {
+    color: #555 !important;
+  }
+
+  .recommendation-box {
+    border: 2px solid #22c55e;
+    background: #f0fdf4;
+  }
+
+  .rec-content h4,
+  .report-block h3,
+  .report-heading i,
+  .rec-icon {
+    color: #16a34a !important;
+  }
+
+  .bf-ref-table th {
+    background: #e8f5e9 !important;
+    color: #16a34a !important;
+  }
+
+  .hidden {
+    display: block !important;
+  }
+}
+
+/* ── 17. RESPONSIVE TWEAKS ───────────────────────────────────────── */
+@media (max-width: 480px) {
+  .card {
+    padding: 1.5rem 1.1rem;
+  }
+
+  .btn-group {
+    flex-direction: column;
+  }
+
+  .btn {
+    min-width: 100%;
+  }
+
+  .logo {
+    font-size: 1.4rem;
+  }
+}
